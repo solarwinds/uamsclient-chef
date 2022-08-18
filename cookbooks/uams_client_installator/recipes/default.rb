@@ -1,8 +1,8 @@
-# Cookbook Name:: uams_client_installator
+# Cookbook:: uams_client_installator
 # Recipe:: default.rb
 
-package "wget" do
-   action :install
+package 'wget' do
+  action :install
 end
 
 ENV['UAMS_ACCESS_TOKEN'] = node['uams_client_installator']['uams_access_token']
@@ -25,10 +25,10 @@ remote_file "#{installation_directory}/uamsclient_install.sh" do
 end
 
 execute 'Run UAMS Client installation script' do
-    command <<-EOH
-        cd #{installation_directory}
-        sh ./uamsclient_install.sh
-    EOH
-    live_stream true
-    action :run
+  command <<-EOH
+    cd #{installation_directory}
+    sh ./uamsclient_install.sh
+  EOH
+  live_stream true
+  action :run
 end
