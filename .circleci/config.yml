@@ -8,11 +8,10 @@ commands:
     steps:
       - run: ps -aux | grep "uamsclient start" | grep -v grep
   install-client:
-    environment:
-      - CHEF_LICENSE: accept-silence
     steps:
       - checkout
       - run: |
+          export CHEF_LICENSE=accept-silence
           cd cookbooks/uams_client_installator/recipes
           chef-client -z default.rb
   install-chef-deb:
