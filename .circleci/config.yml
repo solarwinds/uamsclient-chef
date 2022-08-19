@@ -30,9 +30,10 @@ commands:
       - run: |
           if [ "$UID" == 0 ]; then
             yum -y install sudo curl hostname
-            yum -y install libxcrypt-compat || yum -y install libxcrypt
+            yum -y install libxcrypt-compat || yum -y install libxcrypt || true
           else
-            sudo yum -y install libxcrypt-compat sudo curl hostname
+            sudo yum -y install sudo curl hostname
+            sudo yum -y install libxcrypt-compat || sudo yum -y install libxcrypt || true
           fi
 
   install-chef:
