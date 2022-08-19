@@ -11,11 +11,11 @@ commands:
     steps:
       - checkout
       - run: |
-          sed -i 's/<group_name>/test/' playbook.yaml
-          cp ci_test/inventory/localhost ./hosts
-          ansible-playbook playbook.yaml -i hosts
+          cd cookbooks/uams_client_installator
+          chef-client -z solo.rb
   install-chef-deb:
-    steps:      
+    steps:
+      - run: apt -y install sudo curl       
       - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
 
   install-chef-deb-vm:
