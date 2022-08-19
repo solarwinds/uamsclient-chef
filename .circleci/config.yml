@@ -18,7 +18,7 @@ commands:
           fi
   install-chef-deps-deb:
     steps:
-      - run:
+      - run: |
           if [ "$UID" == 0 ]; then
             apt update && apt -y install sudo curl
           else
@@ -27,7 +27,7 @@ commands:
 
   install-chef-deps-rpm:
     steps:
-      - run:
+      - run: |
           if [ "$UID" == 0 ]; then
             yum -y install sudo curl
           else
