@@ -11,15 +11,33 @@ commands:
     steps:
       - checkout
       - run: |
-          if [ "$UID" == 0]; then
+          if [ "$UID" == 0 ]; then
             env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
           else
             sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
           fi
+  install-chef-deps-deb:
+    steps:
+      - run:
+          if [ "$UID" == 0 ]; then
+            apt update && apt -y install sudo curl
+          else
+            sudo apt update && sudo apt -y install sudo curl
+          fi
+
+  install-chef-deps-rpm:
+    steps:
+      - run:
+          if [ "$UID" == 0 ]; then
+            yum -y install sudo curl
+          else
+            sudo yum -y install sudo curl
+          fi
+
   install-chef:
     steps:
       - run: |
-          if [ "$UID" == 0]; then
+          if [ "$UID" == 0 ]; then
             apt update && apt -y install sudo curl
             curl -L https://omnitruck.chef.io/install.sh | bash
           else
@@ -42,6 +60,7 @@ jobs:
     docker:
       - image: ubuntu:focal
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -50,6 +69,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-vm
@@ -58,6 +78,7 @@ jobs:
     docker:
       - image: ubuntu:jammy
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -66,6 +87,7 @@ jobs:
     docker:
       - image: ubuntu:bionic
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -74,6 +96,7 @@ jobs:
     docker:
       - image: debian:stretch
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -82,6 +105,7 @@ jobs:
     docker:
       - image: debian:buster
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -90,6 +114,7 @@ jobs:
     docker:
       - image: debian:bullseye
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -98,6 +123,7 @@ jobs:
     docker:
       - image: centos:centos7
     steps:
+      - install-chef-deps-rpm
       - install-chef
       - install-client
       - verify-install-container
@@ -106,6 +132,7 @@ jobs:
     docker:
       - image: fedora:32
     steps:
+      - install-chef-deps-rpm
       - install-chef
       - install-client
       - verify-install-container
@@ -114,6 +141,7 @@ jobs:
     docker:
       - image: fedora:36
     steps:
+      - install-chef-deps-rpm
       - install-chef
       - install-client
       - verify-install-container
@@ -122,6 +150,7 @@ jobs:
     docker:
       - image: kalilinux/kali-rolling
     steps:
+      - install-chef-deps-deb
       - install-chef
       - install-client
       - verify-install-container
@@ -130,6 +159,7 @@ jobs:
     docker:
       - image: oraclelinux:8
     steps:
+      - install-chef-deps-rpm
       - install-chef
       - install-client
       - verify-install-container
@@ -138,6 +168,7 @@ jobs:
     docker:
       - image: oraclelinux:9
     steps:
+      - install-chef-deps-rpm
       - install-chef
       - install-client
       - verify-install-container
