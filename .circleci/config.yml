@@ -11,7 +11,7 @@ commands:
     steps:
       - checkout
       - run: |
-          export CHEF_LICENSE=accept-silence
+          export CHEF_LICENSE=accept-silent
           cd cookbooks/uams_client_installator/recipes
           chef-client -z default.rb
   install-chef-deb:
