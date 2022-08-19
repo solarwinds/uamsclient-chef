@@ -11,8 +11,8 @@ commands:
     steps:
       - checkout
       - run: |
-          cd cookbooks/uams_client_installator
-          chef-client -z solo.rb
+          cd cookbooks/uams_client_installator/recipes
+          chef-client -z default.rb
   install-chef-deb:
     steps:
       - run: apt update && apt -y install sudo curl       
