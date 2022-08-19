@@ -1,5 +1,24 @@
 version: 2.1
 
+commands:
+  verify-install-vm:
+    steps:
+      - run: ps -aux | grep "uamsclient start" | grep -v grep
+  install-client:
+    steps:
+      - checkout
+      - run: |
+          sed -i 's/<group_name>/test/' playbook.yaml
+          cp ci_test/inventory/localhost ./hosts
+          ansible-playbook playbook.yaml -i hosts
+  install-chef-deb:
+    steps:      
+      - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
+
+  install-chef-deb-vm:
+    steps:      
+      - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
+
 jobs:
   chef-lint:
     docker:
@@ -9,7 +28,25 @@ jobs:
       - run: gem install cookstyle
       - run: cookstyle cookbooks/uams_client_installator
 
+  test-install-ubuntu-focal:
+    docker:
+      - image: ubuntu:focal
+    steps:
+      - install-chef-deb
+      - install-client
+      - verify-install-container
+
+  test-install-ubuntu-focal-vm:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - install-chef-deb-vm
+      - install-client
+      - verify-install-vm
+
 workflows:
   test-uamsclient-role:
     jobs:
       - chef-lint
+      - test-install-ubuntu-focal
+      - test-install-ubuntu-focal-vm
