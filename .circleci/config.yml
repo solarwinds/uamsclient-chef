@@ -1,6 +1,9 @@
 version: 2.1
 
 commands:
+  verify-install-container:
+    steps:
+      - run: /opt/solarwinds/uamsclient/sbin/uamsclient version
   verify-install-vm:
     steps:
       - run: ps -aux | grep "uamsclient start" | grep -v grep
