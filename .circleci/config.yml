@@ -101,7 +101,7 @@ jobs:
     docker:
       - image: fedora:36
     steps:
-      - install-chefa
+      - install-chef
       - install-client
       - verify-install-container
 
