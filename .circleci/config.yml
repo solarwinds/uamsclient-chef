@@ -10,10 +10,7 @@ commands:
   install-client:
     steps:
       - checkout
-      - run: |
-          export CHEF_LICENSE=accept-silent
-          cd cookbooks/uams_client_installator/recipes
-          chef-client -z default.rb
+      - run: sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
   install-chef-deb:
     steps:
       - run: apt update && apt -y install sudo curl       
