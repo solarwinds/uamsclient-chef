@@ -10,11 +10,24 @@ commands:
   install-client:
     steps:
       - checkout
-      - run: sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
+      - run: |
+          if [ "$UID" == 0]; then
+            env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
+          else
+            sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
+          fi
   install-chef:
     steps:
-      - run: apt update && apt -y install sudo curl       
-      - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
+      - run: |
+          if [ "$UID" == 0]; then
+            apt update && apt -y install sudo curl
+            curl -L https://omnitruck.chef.io/install.sh | bash
+          else
+            sudo apt update && sudo apt -y install sudo curl
+            curl -L https://omnitruck.chef.io/install.sh | sudo bash
+          fi
+
+
 
 jobs:
   chef-lint:
