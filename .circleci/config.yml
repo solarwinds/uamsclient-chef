@@ -29,19 +29,17 @@ commands:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
-            yum -y install libxcrypt-compat sudo curl
+            yum -y install libxcrypt-compat sudo curl hostname
           else
-            sudo yum -y install libxcrypt-compat sudo curl
+            sudo yum -y install libxcrypt-compat sudo curl hostname
           fi
 
   install-chef:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
-            apt update && apt -y install sudo curl
             curl -L https://omnitruck.chef.io/install.sh | bash
           else
-            sudo apt update && sudo apt -y install sudo curl
             curl -L https://omnitruck.chef.io/install.sh | sudo bash
           fi
 
