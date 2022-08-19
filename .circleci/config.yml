@@ -15,7 +15,7 @@ commands:
           chef-client -z solo.rb
   install-chef-deb:
     steps:
-      - run: apt -y install sudo curl       
+      - run: apt update && apt -y install sudo curl       
       - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
 
   install-chef-deb-vm:
