@@ -29,9 +29,9 @@ commands:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
-            yum -y install sudo curl
+            yum -y install libxcrypt-compat sudo curl
           else
-            sudo yum -y install sudo curl
+            sudo yum -y install libxcrypt-compat sudo curl
           fi
 
   install-chef:
