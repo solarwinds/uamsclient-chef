@@ -11,13 +11,9 @@ commands:
     steps:
       - checkout
       - run: sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
-  install-chef-deb:
+  install-chef:
     steps:
       - run: apt update && apt -y install sudo curl       
-      - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
-
-  install-chef-deb-vm:
-    steps:      
       - run: curl -L https://omnitruck.chef.io/install.sh | sudo bash
 
 jobs:
@@ -33,7 +29,7 @@ jobs:
     docker:
       - image: ubuntu:focal
     steps:
-      - install-chef-deb
+      - install-chef
       - install-client
       - verify-install-container
 
@@ -41,9 +37,97 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
-      - install-chef-deb-vm
+      - install-chef
       - install-client
       - verify-install-vm
+
+  test-install-ubuntu-jammy:
+    docker:
+      - image: ubuntu:jammy
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-ubuntu-bionic:
+    docker:
+      - image: ubuntu:bionic
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-debian-stretch:
+    docker:
+      - image: debian:stretch
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-debian-buster:
+    docker:
+      - image: debian:buster
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-debian-bullseye:
+    docker:
+      - image: debian:bullseye
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-centos-7:
+    docker:
+      - image: centos:centos7
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-fedora-32:
+    docker:
+      - image: fedora:32
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-fedora-36:
+    docker:
+      - image: fedora:36
+    steps:
+      - install-chefa
+      - install-client
+      - verify-install-container
+
+  test-install-kali:
+    docker:
+      - image: kalilinux/kali-rolling
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-oracle-8:
+    docker:
+      - image: oraclelinux:8
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
+
+  test-install-oracle-9:
+    docker:
+      - image: oraclelinux:9
+    steps:
+      - install-chef
+      - install-client
+      - verify-install-container
 
 workflows:
   test-uamsclient-role:
@@ -51,3 +135,14 @@ workflows:
       - chef-lint
       - test-install-ubuntu-focal
       - test-install-ubuntu-focal-vm
+      - test-install-ubuntu-jammy
+      - test-install-ubuntu-bionic
+      - test-install-debian-stretch
+      - test-install-debian-buster
+      - test-install-debian-bullseye
+      - test-install-centos-7
+      - test-install-fedora-32
+      - test-install-fedora-36
+      - test-install-kali
+      - test-install-oracle-8
+      - test-install-oracle-9
