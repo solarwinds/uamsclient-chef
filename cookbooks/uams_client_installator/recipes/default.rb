@@ -6,6 +6,7 @@ package 'wget' do
 end
 
 ENV['UAMS_ACCESS_TOKEN'] = node['uams_client_installator']['uams_access_token']
+ENV['UAMS_METADATA'] = node['uams_client_installator']['uams_metadata']
 
 installation_directory = node['uams_client_installator']['uams_install_path']
 
