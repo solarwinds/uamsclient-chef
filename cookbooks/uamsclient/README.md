@@ -7,14 +7,18 @@ The **uamsclient** cookbook is used to deploy and configure UAMS Client (SolarWi
 The **uamsclient** cookbook is compatible with chef >= 16.0. It might work on older versions but it's not guaranteed.
 
 # Installation
+## Chef Supermarket
 
+This cookbook is available in Chef Supermarket -> [direct link](https://supermarket.chef.io/cookbooks/uamsclient) therefore is available for any common chef usage pattern.
+
+## Manual installation/configuration for private/managed Chef server
 1. Clone the repository
 2. Set required attributes (*attributes/default.rb* / role / environment / use wrapper cookbook)
 3. Upload cookbook(s) to the Chef server
 ```
 knife cookbook upload ...
 ```
-4. Add uamsclient::uamsclient recipe to the *run_list*
+4. Add uamsclient::uamsclient recipe (or/and wrapper recipe) to the *run_list*
 5. Run chef-client on the node (or wait for scheduled execution)
 
 # Attributes
