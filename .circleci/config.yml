@@ -11,10 +11,11 @@ commands:
     steps:
       - checkout
       - run: |
+          ATTRIBUTES_OVERRIDE="./.circleci/test_data/test-attributes.json"
           if [ "$UID" == 0 ]; then
-            env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
+            env CHEF_LICENSE=accept-silent chef-client -z -o uamsclient::uamsclient -j ${ATTRIBUTES_OVERRIDE}
           else
-            sudo env CHEF_LICENSE=accept-silent chef-client -z -o uams_client_installator
+            sudo env CHEF_LICENSE=accept-silent chef-client -z -o uamsclient::uamsclient -j ${ATTRIBUTES_OVERRIDE}
           fi
   install-chef-deps-deb:
     steps:
@@ -54,7 +55,7 @@ jobs:
     steps:
       - checkout
       - run: gem install cookstyle
-      - run: cookstyle cookbooks/uams_client_installator
+      - run: cookstyle cookbooks/uamsclient
 
   test-install-ubuntu-focal:
     docker:
