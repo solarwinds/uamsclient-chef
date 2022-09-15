@@ -40,6 +40,10 @@ ruby_block 'Check OS support' do
       if majorPlatformVersion < 8
         isVersionSuported = false
       end
+    when 'windows'
+      if majorPlatformVersion < 10
+        isVersionSuported = false
+      end
     else
       raise "Platform #{node['platform']} is not supported by UAMS Client."
     end
@@ -57,6 +61,9 @@ ruby_block 'Evaluate package manager for platform' do
     if platform_family?('debian')
       packageManager = 'apt'
       installPackageExtention = 'deb'
+    elsif platform_family?('windows')
+      packageManager = 'msi'
+      installPackageExtention = 'msi'
     elsif platform_family?('rhel', 'fedora')
       installPackageExtention = 'rpm'
       packageManager = if platform?('fedora', 'oracle') ||
@@ -78,8 +85,37 @@ end
 ENV['UAMS_ACCESS_TOKEN'] = node['uamsclient']['uams_access_token']
 ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
 
+directory 'Local path for installer' do
+  mode '0755'
+  path node['uamsclient']['local_pkg_path']
+  recursive true
+  action :create
+end
+
+ruby_block 'Evaluate installation package filename' do
+  block do
+    node.run_state['installation_pkg_filename'] = 'uamsclient.' + node.run_state['package_file_extention']
+    node.run_state['installation_pkg'] = node['uamsclient']['local_pkg_path'] + '/' + node.run_state['installation_pkg_filename']
+  end
+  action :run
+end
+
+remote_file 'Download installation package' do
+  path lazy { node.run_state['installation_pkg'] }
+  source lazy { node['uamsclient']['install_pkg_url'] + '/' + node.run_state['installation_pkg_filename'] }
+  action :create
+end
+
 if node['os'] == 'linux'
   include_recipe '::_install_on_linux'
+elsif platform_family?('windows')
+  include_recipe '::_install_on_windows'
 else
   raise "No installation recipe matches your OS: #{node['os']}"
+end
+
+file 'Remove installer' do
+  path lazy { "#{node.run_state['installation_pkg']}" }
+  action :delete
+  only_if { node['uamsclient']['remove_installer'] }
 end

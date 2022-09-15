@@ -21,7 +21,7 @@ knife cookbook upload ...
 
 | Attribute | Description |
 | -------------------- | --------------------------------------------------------------- |
-| `node['uamsclient']['uams_access_token'] ` | Access token from SolarWinds Observability |
+| `node['uamsclient']['uams_access_token'] ` | **required** Access token from SolarWinds Observability |
+| `node['uamsclient']['local_pkg_path']` | **required on windows** Overrides path where installation package is stored temporarily |
 | `node['uamsclient']['uams_metadata']` | Specifies the role for client - in most cases default value is valid one |
-| `node['uamsclient']['local_pkg_path']` | Overrides path where installation package is stored temporarily |
 | `node['uamsclient']['remove_installer']` | If installer package should be removed after the installation (default: true) |
