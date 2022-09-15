@@ -23,7 +23,7 @@
   "privacy": false,
   "chef_versions": [
     [
-      ">= 12.7"
+      ">= 16.0"
     ]
   ],
   "ohai_versions": [
