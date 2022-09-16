@@ -7,13 +7,13 @@
   "license": "MIT",
   "platforms": {
     "ubuntu": ">= 18.04",
-    "debian": ">= 9",
-    "redhat": ">= 7",
-    "centos": ">= 7",
-    "fedora": ">= 32",
-    "kali": ">= 2021",
-    "oracle": ">= 8",
-    "windows": ">= 2016"
+    "debian": ">= 9.0",
+    "redhat": ">= 7.0",
+    "centos": ">= 7.0",
+    "fedora": ">= 32.0",
+    "kali": ">= 2021.0",
+    "oracle": ">= 8.0",
+    "windows": ">= 10.0"
   },
   "dependencies": {
 
