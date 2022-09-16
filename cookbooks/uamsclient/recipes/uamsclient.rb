@@ -1,6 +1,6 @@
 ruby_block 'Validate inputs' do
   block do
-    %w('uams_access_token' 'uams_metadata' 'swo_url').each do |attr_name|
+    %w(uams_access_token uams_metadata swo_url).each do |attr_name|
       raise "Attribute #{attr_name} is not set." if node['uamsclient'][attr_name] == ''
     end
   end
