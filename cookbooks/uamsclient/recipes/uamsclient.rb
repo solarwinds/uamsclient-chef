@@ -1,7 +1,8 @@
 ruby_block 'Validate inputs' do
   block do
-    raise 'Attribute uams_access_token is not set.' if node['uamsclient']['uams_access_token'] == ''
-    raise 'Attribute uams_metadata is not set.' if node['uamsclient']['uams_metadata'] == ''
+    ['uams_access_token', 'uams_metadata', 'swo_url'].each do |attr_name|
+      raise "Attribute #{attr_name} is not set." if node['uamsclient'][attr_name] == ''
+    end
   end
   action :run
 end
