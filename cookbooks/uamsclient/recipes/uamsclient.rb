@@ -82,6 +82,25 @@ ruby_block 'Evaluate package manager for platform' do
   action :run
 end
 
+include_recipe '::_check_available_version'
+include_recipe '::_check_installed_version'
+
+ruby_block 'Evaluate if new version should be installed' do
+  block do
+    node.run_state['install_new_version'] = false
+    puts # empty line
+    puts "Installed version: #{node.run_state['installed_version']}"
+    puts "Available version: #{node.run_state['available_version']}"
+    if node.run_state['installed_version'] == '' || Gem::Version.new(node.run_state['available_version']) > Gem::Version.new(node.run_state['installed_version'])
+      puts 'Proceed with installation.'
+      node.run_state['install_new_version'] = true
+    else
+      puts 'Skipping installation.'
+    end
+  end
+  action :run
+end
+
 ENV['UAMS_ACCESS_TOKEN'] = node['uamsclient']['uams_access_token']
 ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
 
@@ -90,6 +109,7 @@ directory 'Local path for installer' do
   path node['uamsclient']['local_pkg_path']
   recursive true
   action :create
+  only_if { node.run_state['install_new_version'] }
 end
 
 ruby_block 'Evaluate installation package filename' do
@@ -98,12 +118,14 @@ ruby_block 'Evaluate installation package filename' do
     node.run_state['installation_pkg'] = node['uamsclient']['local_pkg_path'] + '/' + node.run_state['installation_pkg_filename']
   end
   action :run
+  only_if { node.run_state['install_new_version'] }
 end
 
 remote_file 'Download installation package' do
   path lazy { node.run_state['installation_pkg'] }
   source lazy { node['uamsclient']['install_pkg_url'] + '/' + node.run_state['installation_pkg_filename'] }
   action :create
+  only_if { node.run_state['install_new_version'] }
 end
 
 if node['os'] == 'linux'
@@ -117,5 +139,5 @@ end
 file 'Remove installer' do
   path lazy { "#{node.run_state['installation_pkg']}" }
   action :delete
-  only_if { node['uamsclient']['remove_installer'] }
+  only_if { node['uamsclient']['remove_installer'] && node.run_state['install_new_version'] }
 end

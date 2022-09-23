@@ -3,4 +3,5 @@ package 'Install UAMS Client with msi' do
   source lazy { "#{node.run_state['installation_pkg']}" }
   options "ACCESSTOKEN=#{node['uamsclient']['uams_access_token']} METADATA=#{node['uamsclient']['uams_metadata']}"
   action :install
+  only_if { node.run_state['install_new_version'] }
 end

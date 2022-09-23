@@ -1,0 +1,7 @@
+{
+    "uamsclient": {
+      "uams_access_token": "dummytoken",
+      "install_pkg_url": "https://agent-binaries.global.dev-ssp.solarwinds.com/uams/latest",
+      "dev_container_test": true
+    }
+  }
