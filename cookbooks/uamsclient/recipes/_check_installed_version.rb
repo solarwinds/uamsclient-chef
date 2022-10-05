@@ -21,6 +21,5 @@ ruby_block 'Get installed version' do
     node.run_state['installed_version'] = shell_out(node.run_state['command_if_uams_installed']).stdout.chomp
   end
   action :run
-  only_if !platform_family?('windows')
 end
 
