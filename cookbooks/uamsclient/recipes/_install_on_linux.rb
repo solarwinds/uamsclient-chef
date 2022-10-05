@@ -1,5 +1,5 @@
 execute 'Install UAMS Client with apt' do
-  command lazy { "apt install -y #{node.run_state['installation_pkg']}" }
+  command lazy { "dpkg -i #{node.run_state['installation_pkg']}" }
   action :run
   only_if { node.run_state['install_new_version'] && node.run_state['package_manager'] == 'apt' && !node['uamsclient']['dev_container_test'] }
 end
