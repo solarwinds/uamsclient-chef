@@ -1,7 +1,8 @@
 ruby_block 'Validate inputs' do
   block do
-    raise 'Attribute uams_access_token is not set.' if node['uamsclient']['uams_access_token'] == ''
-    raise 'Attribute uams_metadata is not set.' if node['uamsclient']['uams_metadata'] == ''
+    %w(uams_access_token uams_metadata swo_url).each do |attr_name|
+      raise "Attribute #{attr_name} is not set." if node['uamsclient'][attr_name] == ''
+    end
   end
   action :run
 end
@@ -103,6 +104,7 @@ end
 
 ENV['UAMS_ACCESS_TOKEN'] = node['uamsclient']['uams_access_token']
 ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
+ENV['SWO_URL'] = node['uamsclient']['swo_url']
 
 directory 'Local path for installer' do
   mode '0755'
