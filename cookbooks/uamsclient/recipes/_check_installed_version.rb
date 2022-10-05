@@ -20,4 +20,3 @@ ruby_block 'Get installed version' do
   end
   action :run
 end
-
