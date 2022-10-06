@@ -1,6 +1,6 @@
 {
     "uamsclient": {
       "uams_access_token": "dummytoken",
-      "swo_url": ""
+      "swo_url": "dummy"
     }
   }
