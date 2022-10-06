@@ -1,6 +1,7 @@
 {
     "uamsclient": {
       "uams_access_token": "dummytoken",
-      "dev_container_test": true
+      "dev_container_test": true,
+      "swo_url": "https://dummy"
     }
   }
