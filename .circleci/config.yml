@@ -156,7 +156,7 @@ jobs:
 
   test-install-kali:
     docker:
-      - image: kalilinux/kali-rolling
+      - image: kalilinux/kali-last-release
     steps:
       - install-chef-deps-deb
       - install-chef
