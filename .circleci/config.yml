@@ -8,10 +8,18 @@ commands:
     steps:
       - run: ps -aux | grep "uamsclient start" | grep -v grep
   install-client:
+    parameters:
+      in_container:
+        type: boolean
+        default: true
     steps:
       - checkout
       - run: |
-          ATTRIBUTES_OVERRIDE="./.circleci/test_data/test-attributes.json"
+          if [[ "<< parameters.in_container >>" == true ]]; then
+            ATTRIBUTES_OVERRIDE="./.circleci/test_data/test-attributes-in-container.json"
+          else
+            ATTRIBUTES_OVERRIDE="./.circleci/test_data/test-attributes.json"
+          fi
           if [ "$UID" == 0 ]; then
             env CHEF_LICENSE=accept-silent chef-client -z -o uamsclient::uamsclient -j ${ATTRIBUTES_OVERRIDE}
           else
@@ -46,8 +54,6 @@ commands:
             curl -L https://omnitruck.chef.io/install.sh | sudo bash
           fi
 
-
-
 jobs:
   chef-lint:
     docker:
@@ -72,7 +78,8 @@ jobs:
     steps:
       - install-chef-deps-deb
       - install-chef
-      - install-client
+      - install-client:
+          in_container: false
       - verify-install-vm
 
   test-install-ubuntu-jammy:
@@ -149,7 +156,7 @@ jobs:
 
   test-install-kali:
     docker:
-      - image: kalilinux/kali-rolling
+      - image: kalilinux/kali-last-release
     steps:
       - install-chef-deps-deb
       - install-chef
