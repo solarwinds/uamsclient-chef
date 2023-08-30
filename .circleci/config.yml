@@ -10,7 +10,7 @@ commands:
   install-glibc:
     steps:
       - run: |
-          yum install glib
+          yum install -y glib
   install-client:
     parameters:
       in_container:
