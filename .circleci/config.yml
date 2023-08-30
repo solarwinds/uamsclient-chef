@@ -7,6 +7,10 @@ commands:
   verify-install-vm:
     steps:
       - run: ps -aux | grep "uamsclient start" | grep -v grep
+  install-glibc:
+    steps:
+      - run: |
+          yum install glib
   install-client:
     parameters:
       in_container:
@@ -141,6 +145,7 @@ jobs:
       - image: fedora:32
     steps:
       - install-chef-deps-rpm
+      - install-glibc
       - install-chef
       - install-client
       - verify-install-container
