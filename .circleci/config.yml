@@ -89,9 +89,9 @@ commands:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
-             bash (curl -L https://omnitruck.chef.io/install.sh) -v 17.10.3
+            curl -L https://omnitruck.chef.io/install.sh | bash -s -- -version 17.10.3
           else
-             sudo bash (curl -L https://omnitruck.chef.io/install.sh) -v 17.10.3
+            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -version 17.10.3
           fi 
 
 jobs:
