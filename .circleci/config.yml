@@ -91,7 +91,7 @@ commands:
           if [ "$UID" == 0 ]; then
             curl -L https://omnitruck.chef.io/install.sh | bash -s -- -version 17.10.3
           else
-            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -version 17.10.3
+            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 17.10.3
           fi 
 
 jobs:
