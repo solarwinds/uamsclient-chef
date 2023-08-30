@@ -38,6 +38,17 @@ commands:
             sudo apt update && sudo apt -y install sudo curl
           fi
 
+  install-chef-deps-deb-stretch:
+    steps:
+      - run: |
+          sed -i -e 's/deb.debian.org/archive.debian.org/g' -e 's|security.debian.org|archive.debian.org/|g' -e '/stretch-updates/d' /etc/apt/sources.list
+          export LANG=C.UTF-8
+          export LC_ALL=C.UTF-8
+          apt update
+          apt install python3-pip -y
+          apt install curl -y
+          pip3 install ansible
+
   install-chef-deps-rpm:
     steps:
       - run: |
@@ -108,7 +119,7 @@ jobs:
     docker:
       - image: debian:stretch
     steps:
-      - install-chef-deps-deb
+      - install-chef-deps-deb-stretch
       - install-chef
       - install-client
       - verify-install-container
