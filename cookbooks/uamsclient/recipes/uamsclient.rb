@@ -9,47 +9,47 @@ end
 
 ruby_block 'Check OS support' do
   block do
-    isVersionSuported = true
+    isVersionSupported = true
     majorPlatformVersionString, = node['platform_version'].split('.')
     majorPlatformVersion = majorPlatformVersionString.to_i
     case node['platform']
     when 'debian'
       if majorPlatformVersion < 9
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'ubuntu'
       if majorPlatformVersion < 18
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'redhat'
       if majorPlatformVersion < 7
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'centos'
       if majorPlatformVersion < 7
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'fedora'
       if majorPlatformVersion < 32
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'kali'
       if majorPlatformVersion < 2021
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'oracle'
       if majorPlatformVersion < 8
-        isVersionSuported = false
+        isVersionSupported = false
       end
     when 'windows'
       if majorPlatformVersion < 10
-        isVersionSuported = false
+        isVersionSupported = false
       end
     else
       raise "Platform #{node['platform']} is not supported by UAMS Client."
     end
 
-    unless isVersionSuported
+    unless isVersionSupported
       raise "Platform (#{node['platform']}) version #{node['platform_version']} is not supported."
     end
     node.run_state['major_platform_version'] = majorPlatformVersion
@@ -61,12 +61,12 @@ ruby_block 'Evaluate package manager for platform' do
   block do
     if platform_family?('debian')
       packageManager = 'apt'
-      installPackageExtention = 'deb'
+      installPackageExtension = 'deb'
     elsif platform_family?('windows')
       packageManager = 'msi'
-      installPackageExtention = 'msi'
+      installPackageExtension = 'msi'
     elsif platform_family?('rhel', 'fedora')
-      installPackageExtention = 'rpm'
+      installPackageExtension = 'rpm'
       packageManager = if platform?('fedora', 'oracle') ||
                           (platform?('centos') && node.run_state['major_platform_version'] > 7) ||
                           (platform?('redhat') && node.run_state['major_platform_version'] > 7)
@@ -78,7 +78,7 @@ ruby_block 'Evaluate package manager for platform' do
       raise "Can't evaluate package manager for given platform - #{node['platform']}."
     end
     node.run_state['package_manager'] = packageManager
-    node.run_state['package_file_extention'] = installPackageExtention
+    node.run_state['package_file_extension'] = installPackageExtension
   end
   action :run
 end
@@ -116,7 +116,7 @@ end
 
 ruby_block 'Evaluate installation package filename' do
   block do
-    node.run_state['installation_pkg_filename'] = 'uamsclient.' + node.run_state['package_file_extention']
+    node.run_state['installation_pkg_filename'] = 'uamsclient.' + node.run_state['package_file_extension']
     node.run_state['installation_pkg'] = node['uamsclient']['local_pkg_path'] + '/' + node.run_state['installation_pkg_filename']
   end
   action :run
