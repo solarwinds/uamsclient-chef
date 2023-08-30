@@ -10,10 +10,6 @@ commands:
   verify-uninstall:
     steps:
       - run: if [ -d "/opt/solarwinds/uamsclient" ]; then exit 1; fi
-  install-glibc:
-    steps:
-      - run: |
-          yum install -y glib
   install-client:
     parameters:
       in_container:
@@ -88,6 +84,15 @@ commands:
           else
             curl -L https://omnitruck.chef.io/install.sh | sudo bash
           fi
+
+  install-chef-fedora32:
+    steps:
+      - run: |
+          if [ "$UID" == 0 ]; then
+             bash (curl -L https://omnitruck.chef.io/install.sh) -v 17.10.3
+          else
+             sudo bash (curl -L https://omnitruck.chef.io/install.sh) -v 17.10.3
+          fi 
 
 jobs:
   chef-lint:
@@ -192,7 +197,6 @@ jobs:
       - image: fedora:32
     steps:
       - install-chef-deps-rpm
-      - install-glibc
       - install-chef
       - install-client
       - verify-install-container
