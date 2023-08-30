@@ -112,7 +112,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-ubuntu-focal-vm:
     machine:
@@ -124,7 +124,7 @@ jobs:
           in_container: false
       - verify-install-vm
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-ubuntu-jammy:
     docker:
@@ -135,7 +135,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-ubuntu-bionic:
     docker:
@@ -146,7 +146,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-debian-stretch:
     docker:
@@ -157,7 +157,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-debian-buster:
     docker:
@@ -168,7 +168,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-debian-bullseye:
     docker:
@@ -179,7 +179,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-centos-7:
     docker:
@@ -190,7 +190,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-fedora-32:
     docker:
@@ -201,7 +201,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-fedora-36:
     docker:
@@ -212,7 +212,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-kali:
     docker:
@@ -223,7 +223,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-oracle-8:
     docker:
@@ -234,7 +234,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
   test-install-and-uninstall-oracle-9:
     docker:
@@ -245,7 +245,7 @@ jobs:
       - install-client
       - verify-install-container
       - uninstall-client
-      - verify_uninstall
+      - verify-uninstall
 
 workflows:
   test-uamsclient-role:
