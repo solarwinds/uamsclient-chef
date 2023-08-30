@@ -85,7 +85,7 @@ commands:
             curl -L https://omnitruck.chef.io/install.sh | sudo bash
           fi
 
-  install-chef-fedora32:
+  install-chef-fedora-32:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
@@ -197,7 +197,7 @@ jobs:
       - image: fedora:32
     steps:
       - install-chef-deps-rpm
-      - install-chef
+      - install-chef-fedora-32
       - install-client
       - verify-install-container
       - uninstall-client
