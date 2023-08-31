@@ -17,5 +17,5 @@ This cookbook is available in Chef Supermarket -> [direct link](https://supermar
 ```
 knife cookbook upload ...
 ```
-3. Add uamsclient::uamsclient_uninstall recipe (or/and wrapper recipe) to the *run_list*
+3. Add uamsclient_uninstall::uamsclient_uninstall recipe (or/and wrapper recipe) to the *run_list*
 4. Run chef-client on the node (or wait for scheduled execution)
