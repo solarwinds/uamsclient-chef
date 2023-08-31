@@ -60,10 +60,11 @@ commands:
           sed -i -e 's/deb.debian.org/archive.debian.org/g' -e 's|security.debian.org|archive.debian.org/|g' -e '/stretch-updates/d' /etc/apt/sources.list
           export LANG=C.UTF-8
           export LC_ALL=C.UTF-8
-          apt update
-          apt install python3-pip -y
-          apt install curl -y
-          pip3 install ansible
+          if [ "$UID" == 0 ]; then
+            apt update && apt -y install sudo curl
+          else
+            sudo apt update && sudo apt -y install sudo curl
+          fi
 
   install-chef-deps-rpm:
     steps:
