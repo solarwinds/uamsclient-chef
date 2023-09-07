@@ -1,0 +1,43 @@
+{
+  "name": "uamsclient_uninstall",
+  "description": "Uninstalls UAMS Client - agent for SolarWinds Observability platform",
+  "long_description": "",
+  "maintainer": "SolarWinds",
+  "maintainer_email": "support@solarwinds.com",
+  "license": "MIT",
+  "platforms": {
+    "ubuntu": ">= 18.04",
+    "debian": ">= 9.0",
+    "redhat": ">= 7.0",
+    "centos": ">= 7.0",
+    "fedora": ">= 32.0",
+    "kali": ">= 2021.0",
+    "oracle": ">= 8.0",
+    "windows": ">= 10.0"
+  },
+  "dependencies": {
+
+  },
+  "providing": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "0.2.0",
+  "source_url": "https://github.com/solarwinds/uamsclient-chef",
+  "issues_url": "https://github.com/solarwinds/uamsclient-chef/issues",
+  "privacy": false,
+  "chef_versions": [
+    [
+      ">= 16.0"
+    ]
+  ],
+  "ohai_versions": [
+
+  ],
+  "gems": [
+
+  ],
+  "eager_load_libraries": true
+}
