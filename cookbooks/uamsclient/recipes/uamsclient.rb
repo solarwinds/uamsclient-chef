@@ -41,11 +41,11 @@ ruby_block 'Check OS support' do
       if majorPlatformVersion < 8
         isVersionSupported = false
       end
-	when 'amazon'
+    when 'amazon'
       if majorPlatformVersion < 2
         isVersionSupported = false
       end
-	when 'rocky'
+    when 'rocky'
       if majorPlatformVersion < 8
         isVersionSupported = false
       end
