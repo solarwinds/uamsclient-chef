@@ -41,6 +41,14 @@ ruby_block 'Check OS support' do
       if majorPlatformVersion < 8
         isVersionSupported = false
       end
+	when 'amazon'
+      if majorPlatformVersion < 2
+        isVersionSupported = false
+      end
+	when 'rocky'
+      if majorPlatformVersion < 8
+        isVersionSupported = false
+      end
     when 'windows'
       if majorPlatformVersion < 10
         isVersionSupported = false
@@ -65,7 +73,7 @@ ruby_block 'Evaluate package manager for platform' do
     elsif platform_family?('windows')
       packageManager = 'msi'
       installPackageExtension = 'msi'
-    elsif platform_family?('rhel', 'fedora')
+    elsif platform_family?('rhel', 'fedora', 'amazon')
       installPackageExtension = 'rpm'
       packageManager = if platform?('fedora', 'oracle') ||
                           (platform?('centos') && node.run_state['major_platform_version'] > 7) ||
