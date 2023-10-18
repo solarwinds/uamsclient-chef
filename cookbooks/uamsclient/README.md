@@ -31,3 +31,5 @@ knife cookbook upload ...
 | `node['uamsclient']['uams_metadata']` | Specifies the role for client - in most cases default value is valid one |
 | `node['uamsclient']['uams_https_proxy'] ` | Specifies HTTPS proxy used by the UAMS Client and its plugins |
 | `node['uamsclient']['remove_installer']` | If installer package should be removed after the installation (default: true) |
+
+You have the option to set an HTTPS proxy through the use of the `uams_https_proxy` attribute. Simply define this attribute to point to your desired HTTPS proxy. Remember that the `uams_https_proxy` attribute sets HTTPS proxy only for the connections established by the UAMS Client and its plugins. To use HTTPS proxy during installation set up HTTPS proxy on your machine so that chef will be able to use it.
