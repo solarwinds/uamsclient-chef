@@ -29,4 +29,5 @@ knife cookbook upload ...
 | `node['uamsclient']['swo_url'] ` | **required** SWO_URL copied from SolarWinds Observability |
 | `node['uamsclient']['local_pkg_path']` | **required on windows** Overrides path where installation package is stored temporarily |
 | `node['uamsclient']['uams_metadata']` | Specifies the role for client - in most cases default value is valid one |
+| `node['uamsclient']['uams_https_proxy'] ` | Specifies HTTPS proxy used by the UAMS Client and its plugins |
 | `node['uamsclient']['remove_installer']` | If installer package should be removed after the installation (default: true) |
