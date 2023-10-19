@@ -113,6 +113,7 @@ end
 ENV['UAMS_ACCESS_TOKEN'] = node['uamsclient']['uams_access_token']
 ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
 ENV['SWO_URL'] = node['uamsclient']['swo_url']
+ENV['UAMS_HTTPS_PROXY'] = node['uamsclient']['uams_https_proxy']
 
 directory 'Local path for installer' do
   mode '0755'
