@@ -3,7 +3,7 @@ maintainer 'SolarWinds'
 maintainer_email 'support@solarwinds.com'
 license 'MIT'
 description 'Example wrapper cookbook'
-version '0.3.0'
+version '0.5.0'
 chef_version '>= 16.0'
 
 depends 'uamsclient'
