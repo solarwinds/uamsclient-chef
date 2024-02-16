@@ -75,7 +75,7 @@ ruby_block 'Evaluate package manager for platform' do
       installPackageExtension = 'msi'
     elsif platform_family?('rhel', 'fedora', 'amazon')
       installPackageExtension = 'rpm'
-      packageManager = if platform?('fedora', 'oracle') ||
+      packageManager = if platform?('fedora', 'oracle', 'rocky') ||
                           (platform?('centos') && node.run_state['major_platform_version'] > 7) ||
                           (platform?('redhat') && node.run_state['major_platform_version'] > 7)
                          'dnf'
