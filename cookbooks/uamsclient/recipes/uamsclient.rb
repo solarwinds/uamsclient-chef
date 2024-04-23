@@ -152,3 +152,19 @@ file 'Remove installer' do
   action :delete
   only_if { node['uamsclient']['remove_installer'] && node.run_state['install_new_version'] }
 end
+
+ruby_block 'wait_for_credentials_plugin' do
+  block do
+    PluginChecker.wait_for_plugin_state('credentials-plugin', '')
+  end
+  action :run
+end
+
+if node['uamsclient']['uams_metadata'].include?('host-monitoring')
+  ruby_block 'wait_for_uams_otel_collector_plugin' do
+    block do
+      PluginChecker.wait_for_plugin_state('uams-otel-collector-plugin', 'hostmetrics-monitoring')
+    end
+    action :run
+  end
+end
