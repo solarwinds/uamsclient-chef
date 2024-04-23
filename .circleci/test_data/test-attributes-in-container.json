@@ -2,6 +2,7 @@
     "uamsclient": {
       "uams_access_token": "dummytoken",
       "swo_url": "dc-01.cloud.solarwinds.com",
-      "dev_container_test": true
+      "dev_container_test": true,
+      "test": true
     }
   }

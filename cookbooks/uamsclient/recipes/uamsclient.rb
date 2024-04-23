@@ -158,13 +158,15 @@ ruby_block 'wait_for_credentials_plugin' do
     PluginChecker.wait_for_plugin_state('credentials-plugin', '')
   end
   action :run
+  only_if { !node.normal['uamsclient']['test'] }
 end
 
-if node['uamsclient']['uams_metadata'].include?('host-monitoring')
+# if node['uamsclient']['uams_metadata'].include?('host-monitoring')
   ruby_block 'wait_for_uams_otel_collector_plugin' do
     block do
       PluginChecker.wait_for_plugin_state('uams-otel-collector-plugin', 'hostmetrics-monitoring')
     end
     action :run
+    only_if { node['uamsclient']['uams_metadata'].include?('host-monitoring') && !node.normal['uamsclient']['test'] }
   end
-end
+# end

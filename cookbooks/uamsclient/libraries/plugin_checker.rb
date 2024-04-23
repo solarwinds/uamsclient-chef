@@ -1,7 +1,7 @@
 module PluginChecker
   def self.wait_for_plugin_state(plugin_name, plugin_instance)
-    api_url = "http://127.0.0.1:2113/info/plugins?format=json"
-    target_state = "STATUS_CODE_OK"
+    api_url = 'http://127.0.0.1:2113/info/plugins?format=json'
+    target_state = 'STATUS_CODE_OK'
     max_retries = 12
     retry_interval = 5
     retries = 0
@@ -15,9 +15,8 @@ module PluginChecker
           break
         else
           Chef::Log.info("Plugin (#{plugin_name}) current state: #{state}")
-          raise "Plugin state incorrect"
+          raise 'Plugin state incorrect'
         end
-
       rescue StandardError => e
         Chef::Log.error("Error while checking #{plugin_name}: #{e}")
         retries += 1
