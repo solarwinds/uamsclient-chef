@@ -70,6 +70,8 @@ commands:
     steps:
       - run: |
           if [ "$UID" == 0 ]; then
+            sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+            sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
             yum -y install sudo curl hostname
             yum -y install libxcrypt-compat || yum -y install libxcrypt || true
           else
