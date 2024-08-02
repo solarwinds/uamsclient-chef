@@ -77,6 +77,15 @@ commands:
             sudo yum -y install libxcrypt-compat || sudo yum -y install libxcrypt || true
           fi
 
+  install-chef-deps-centos-7:
+    steps:
+      - run: |
+          sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+          yum -y install sudo curl hostname
+          yum -y install libxcrypt-compat || yum -y install libxcrypt || true
+
+
   install-chef:
     steps:
       - run: |
@@ -186,7 +195,7 @@ jobs:
     docker:
       - image: centos:centos7
     steps:
-      - install-chef-deps-rpm
+      - install-chef-deps-centos-7
       - install-chef
       - install-client
       - verify-install-container

@@ -23,13 +23,14 @@ knife cookbook upload ...
 
 # Attributes
 
-| Attribute | Description |
-| -------------------- | --------------------------------------------------------------- |
-| `node['uamsclient']['uams_access_token'] ` | **required** Access token from SolarWinds Observability |
-| `node['uamsclient']['swo_url'] ` | **required** SWO_URL copied from SolarWinds Observability |
-| `node['uamsclient']['local_pkg_path']` | **required on windows** Overrides path where installation package is stored temporarily |
-| `node['uamsclient']['uams_metadata']` | Specifies the role for client - in most cases default value is valid one |
-| `node['uamsclient']['uams_https_proxy'] ` | Specifies HTTPS proxy used by the UAMS Client and its plugins |
-| `node['uamsclient']['remove_installer']` | If installer package should be removed after the installation (default: true) |
+| Attribute | Description                                                                                                   |
+| -------------------- |---------------------------------------------------------------------------------------------------------------|
+| `node['uamsclient']['uams_access_token'] ` | **required** Access token from SolarWinds Observability                                                       |
+| `node['uamsclient']['swo_url'] ` | **required** SWO_URL copied from SolarWinds Observability                                                     |
+| `node['uamsclient']['local_pkg_path']` | **required on windows** Overrides path where installation package is stored temporarily                       |
+| `node['uamsclient']['uams_metadata']` | Specifies the role for client - in most cases default value is valid one                                      |
+| `node['uamsclient']['uams_https_proxy'] ` | Specifies HTTPS proxy used by the UAMS Client and its plugins                                                 |
+| `node['uamsclient']['uams_override_hostname'] ` | Optional variable to set a custom Agent name. By default, Agent name is set to the hostname. |
+| `node['uamsclient']['remove_installer']` | If installer package should be removed after the installation (default: true)                                 |
 
 Remember that the `uams_https_proxy` attribute sets HTTPS proxy only for the connections established by the UAMS Client and its plugins. To use HTTPS proxy during installation set up HTTPS proxy on your machine so that chef will be able to use it.
