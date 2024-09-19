@@ -3,6 +3,7 @@ ruby_block 'Validate inputs' do
     %w(uams_access_token uams_metadata swo_url).each do |attr_name|
       raise "Attribute #{attr_name} is not set." if node['uamsclient'][attr_name] == ''
     end
+    managed_locally = node['uamsclient']['uams_managed_locally'] == 'true' ? true : false
   end
   action :run
 end
@@ -115,6 +116,7 @@ ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
 ENV['SWO_URL'] = node['uamsclient']['swo_url']
 ENV['UAMS_HTTPS_PROXY'] = node['uamsclient']['uams_https_proxy']
 ENV['UAMS_OVERRIDE_HOSTNAME'] = node['uamsclient']['uams_override_hostname']
+ENV['UAMS_MANAGED_LOCALLY'] = node['uamsclient']['uams_managed_locally']
 
 directory 'Local path for installer' do
   mode '0755'
@@ -148,24 +150,28 @@ else
   raise "No installation recipe matches your OS: #{node['os']}"
 end
 
+if managed_locally
+  include_recipe '::_locally_managed'
+end
+
 file 'Remove installer' do
   path lazy { "#{node.run_state['installation_pkg']}" }
   action :delete
   only_if { node['uamsclient']['remove_installer'] && node.run_state['install_new_version'] }
 end
 
-ruby_block 'wait_for_credentials_plugin' do
-  block do
-    PluginChecker.wait_for_plugin_state('credentials-plugin', '')
-  end
-  action :run
-  not_if { node['uamsclient']['ci_test'] }
-end
+# ruby_block 'wait_for_credentials_plugin' do
+#   block do
+#     PluginChecker.wait_for_plugin_state('credentials-plugin', '')
+#   end
+#   action :run
+#   not_if { node['uamsclient']['ci_test'] }
+# end
 
 ruby_block 'wait_for_uams_otel_collector_plugin' do
   block do
     PluginChecker.wait_for_plugin_state('uams-otel-collector-plugin', 'hostmetrics-monitoring')
   end
   action :run
-  only_if { node['uamsclient']['uams_metadata'].include?('host-monitoring') && !node['uamsclient']['ci_test'] }
+  only_if { node['uamsclient']['uams_metadata'].include?('host-monitoring') && !node['uamsclient']['ci_test'] $$ !managed_locally }
 end

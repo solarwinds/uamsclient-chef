@@ -4,7 +4,9 @@ default['uamsclient']['uams_metadata'] = 'role:host-monitoring'
 default['uamsclient']['swo_url'] = ''
 default['uamsclient']['uams_https_proxy'] = ''
 default['uamsclient']['uams_override_hostname'] = ''
+default['uamsclient']['uams_managed_locally'] = 'false'
 # Installation configuration
+default['uamsclient']['local_config_template'] = ''
 default['uamsclient']['local_pkg_path'] = '/tmp/uams'
 default['uamsclient']['install_pkg_url'] = 'https://agent-binaries.cloud.solarwinds.com/uams/latest'
 default['uamsclient']['remove_installer'] = true
