@@ -173,5 +173,5 @@ ruby_block 'wait_for_uams_otel_collector_plugin' do
     PluginChecker.wait_for_plugin_state('uams-otel-collector-plugin', 'hostmetrics-monitoring')
   end
   action :run
-  only_if { node['uamsclient']['uams_metadata'].include?('host-monitoring') && !node['uamsclient']['ci_test'] $$ !managed_locally }
+  only_if { node['uamsclient']['uams_metadata'].include?('host-monitoring') && !node['uamsclient']['ci_test'] && !managed_locally }
 end
