@@ -118,6 +118,8 @@ ENV['UAMS_OVERRIDE_HOSTNAME'] = node['uamsclient']['uams_override_hostname']
 ENV['UAMS_MANAGED_LOCALLY'] = node['uamsclient']['uams_managed_locally']
 
 managedLocally = node['uamsclient']['uams_managed_locally'] == 'true' ? true : false
+Chef::Log.info("managedLocally: #{managedLocally}")
+
 
 directory 'Local path for installer' do
   mode '0755'

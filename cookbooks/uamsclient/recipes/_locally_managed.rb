@@ -4,6 +4,7 @@
 ruby_block 'Set template path' do
   block do
     node.run_state['template_path'] = node['uamsclient']['local_config_template'] || 'templates/template_local_config.yaml.erb'
+    Chef::Log.info("Template Path: #{run_state['template_path']}")
   end
   action :run
 end
