@@ -117,8 +117,16 @@ ENV['UAMS_HTTPS_PROXY'] = node['uamsclient']['uams_https_proxy']
 ENV['UAMS_OVERRIDE_HOSTNAME'] = node['uamsclient']['uams_override_hostname']
 ENV['UAMS_MANAGED_LOCALLY'] = node['uamsclient']['uams_managed_locally']
 
-node.run_state['managed_locally'] = node['uamsclient']['uams_managed_locally'] == 'true' ? true : false
-Chef::Log.info("managedLocally: #{node.run_state['managed_locally']}")
+
+
+ruby_block 'XXXXXXX Evaluate if local config installation' do
+  block do
+    node.run_state['managed_locally'] = node['uamsclient']['uams_managed_locally'] == 'true' ? true : false
+    Chef::Log.info("managedLocally: #{node.run_state['managed_locally']}")
+  end
+  action :run
+end
+
 
 
 directory 'Local path for installer' do
@@ -153,7 +161,8 @@ else
   raise "No installation recipe matches your OS: #{node['os']}"
 end
 
-if node.run_state['managed_locally']
+if node['uamsclient']['uams_managed_locally'] == 'true'
+  Chef::Log.info("AAAAAA I AM MANAGED LOCALLY runstate: #{node.run_state['managed_locally'] }")
   include_recipe '::_locally_managed'
 end
 
@@ -162,14 +171,6 @@ file 'Remove installer' do
   action :delete
   only_if { node['uamsclient']['remove_installer'] && node.run_state['install_new_version'] }
 end
-
-# ruby_block 'wait_for_credentials_plugin' do
-#   block do
-#     PluginChecker.wait_for_plugin_state('credentials-plugin', '')
-#   end
-#   action :run
-#   not_if { node['uamsclient']['ci_test'] }
-# end
 
 ruby_block 'wait_for_uams_otel_collector_plugin' do
   block do
