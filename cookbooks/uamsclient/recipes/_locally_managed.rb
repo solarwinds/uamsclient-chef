@@ -9,21 +9,21 @@ ruby_block 'Set template path' do
   action :run
 end
 
-template "/opt/solarwinds/uamsclient/var/local_config.yaml" do
+template '/opt/solarwinds/uamsclient/var/local_config.yaml' do
   source node.run_state['template_path']
-  mode "0644"
+  mode '0644'
   owner 'swagent'
   group 'swagent'
   variables(
-  :local_config => node['uamsclient']['local_config']
-  )
+  local_config: node['uamsclient']['local_config']
+)
   only_if { node['os'] == 'linux' }
 end
 
-template "C:\\ProgramData\\SolarWinds\\UAMSClient\\local_config.yaml" do
+template 'C:\\ProgramData\\SolarWinds\\UAMSClient\\local_config.yaml' do
   source node.run_state['template_path']
   variables(
-  :local_config => node['uamsclient']['local_config']
-  )
+  local_config: node['uamsclient']['local_config']
+)
   only_if { platform_family?('windows') }
 end

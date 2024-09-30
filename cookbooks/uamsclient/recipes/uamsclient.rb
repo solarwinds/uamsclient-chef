@@ -115,7 +115,7 @@ ENV['UAMS_METADATA'] = node['uamsclient']['uams_metadata']
 ENV['SWO_URL'] = node['uamsclient']['swo_url']
 ENV['UAMS_HTTPS_PROXY'] = node['uamsclient']['uams_https_proxy']
 ENV['UAMS_OVERRIDE_HOSTNAME'] = node['uamsclient']['uams_override_hostname']
-ENV['UAMS_MANAGED_LOCALLY'] = node['uamsclient']['uams_managed_locally']  ? "true" : ""
+ENV['UAMS_MANAGED_LOCALLY'] = node['uamsclient']['uams_managed_locally'] ? 'true' : ''
 
 directory 'Local path for installer' do
   mode '0755'
