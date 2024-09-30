@@ -1,15 +1,10 @@
 # Managed locally agent operations
 
 # Define the local config template path block
-ruby_block 'SSSSSS Set template path' do
+ruby_block 'Set template path' do
   block do
-    user_path = node['uamsclient']['local_config_template']
-    if user_path.nil? || user_path.empty?
-      node.run_state['template_path'] = 'templates/local_config.yaml.erb'
-    else
-      node.run_state['template_path'] = user_path
-    end
-    Chef::Log.info("TTTTTTTT Template Path: #{node.run_state['template_path']}")
+    node.run_state['template_path'] = 'templates/local_config.yaml.erb'
+    Chef::Log.info("Template Path: #{node.run_state['template_path']}")
   end
   action :run
 end
