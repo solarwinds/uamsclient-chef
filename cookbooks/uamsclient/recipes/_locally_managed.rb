@@ -20,7 +20,7 @@ end
 
 template '/opt/solarwinds/uamsclient/var/local_config.yaml' do
   source node.run_state['template_path']
-  mode '0644'
+  mode '0660'
   owner 'swagent'
   group 'swagent'
   variables(
@@ -31,7 +31,7 @@ end
 
 template '/opt/solarwinds/uamsclient/var/credentials_config.yaml' do
   source node.run_state['credentials_template_path']
-  mode '0600'
+  mode '0660'
   owner 'swagent'
   group 'swagent'
   variables(
