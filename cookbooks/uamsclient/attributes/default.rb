@@ -13,6 +13,9 @@ default['uamsclient']['remove_installer'] = true
 default['uamsclient']['dev_container_test'] = false
 default['uamsclient']['ci_test'] = false
 
-# Template variables for local config
+# Template variables for local config and credentials config
 default['uamsclient']['local_config']['mysql_host'] = 'mysql_test'
 default['uamsclient']['local_config']['user'] = 'user_test'
+default['uamsclient']['local_config']['secret_name'] = 'secret_name_test'
+default['uamsclient']['credentials_config']['access_key_id'] = 'your_access_key_id'
+default['uamsclient']['credentials_config']['secret_access_key'] = 'your_access_key_id'

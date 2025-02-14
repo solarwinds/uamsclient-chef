@@ -5,7 +5,11 @@ integrations:
       host: <%= @local_config['mysql_host'] %>
       port: 3306
       user: <%= @local_config['user'] %>
-      password: "{{.creds.env.MYSQL_DB_PASWORD}}"
+      password:
+        value-from:
+        provider: aws-secrets-manager
+        secret-name: <%= @local_config['secret_name'] %>
+  packet-capture-enabled: false
       packet-capture-enabled: false
   otel/hostmetrics:
     - name: host-monitoring
