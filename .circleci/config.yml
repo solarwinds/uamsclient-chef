@@ -219,7 +219,8 @@ jobs:
       - image: fedora:36
     steps:
       - install-chef-deps-rpm
-      - install-chef
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
