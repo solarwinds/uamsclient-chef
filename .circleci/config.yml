@@ -77,6 +77,18 @@ commands:
             sudo yum -y install libxcrypt-compat || sudo yum -y install libxcrypt || true
           fi
 
+  install-chef-deps-deb-buster:
+    steps:
+      - run: |
+          sed -i -e 's/deb.debian.org/archive.debian.org/g' -e 's|security.debian.org|archive.debian.org/|g' -e '/buster-updates/d' /etc/apt/sources.list
+          export LANG=C.UTF-8
+          export LC_ALL=C.UTF-8
+          if [ "$UID" == 0 ]; then
+            apt update && apt -y install sudo curl
+          else
+            sudo apt update && sudo apt -y install sudo curl
+          fi
+
   install-chef-deps-centos-7:
     steps:
       - run: |
@@ -173,7 +185,7 @@ jobs:
     docker:
       - image: debian:buster
     steps:
-      - install-chef-deps-deb
+      - install-chef-deps-deb-buster
       - install-chef
       - install-client
       - verify-install-container
