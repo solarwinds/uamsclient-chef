@@ -87,22 +87,21 @@ commands:
 
 
   install-chef:
+    parameters:
+      version:
+        type: string
+        default: ""
     steps:
       - run: |
-          if [ "$UID" == 0 ]; then
-            curl -L https://omnitruck.chef.io/install.sh | bash
-          else
-            curl -L https://omnitruck.chef.io/install.sh | sudo bash
+          VERSION_FLAG=""
+          if [ -n "<< parameters.version >>" ]; then
+            VERSION_FLAG="-v << parameters.version >>"
           fi
-
-  install-chef-fedora-32:
-    steps:
-      - run: |
           if [ "$UID" == 0 ]; then
-            curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v 17.10.3
+            curl -L https://omnitruck.chef.io/install.sh | bash -s -- $VERSION_FLAG
           else
-            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 17.10.3
-          fi 
+            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- $VERSION_FLAG
+          fi
 
 jobs:
   chef-lint:
@@ -163,7 +162,8 @@ jobs:
       - image: debian:stretch
     steps:
       - install-chef-deps-deb-stretch
-      - install-chef
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
@@ -207,7 +207,8 @@ jobs:
       - image: fedora:32
     steps:
       - install-chef-deps-rpm
-      - install-chef-fedora-32
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
