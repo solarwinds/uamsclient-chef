@@ -154,7 +154,7 @@ end
 include_recipe '::_locally_managed' if node['uamsclient']['uams_managed_locally']
 
 file 'Remove installer' do
-  path lazy { "#{node.run_state['installation_pkg']}" }
+  path lazy { node.run_state['installation_pkg'].to_s }
   action :delete
   only_if { node['uamsclient']['remove_installer'] && node.run_state['install_new_version'] }
 end

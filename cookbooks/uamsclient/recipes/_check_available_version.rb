@@ -9,7 +9,7 @@ ruby_block 'Get available version from metadata file' do
     node.run_state['available_version'] = ''
     File.foreach(Chef::Config['file_cache_path'] + '/' + 'metadata.yml') do |line|
       if line.start_with?('version:')
-        node.run_state['available_version'] = (line.chomp.split)[1]
+        node.run_state['available_version'] = line.chomp.split[1]
         break
       end
     end

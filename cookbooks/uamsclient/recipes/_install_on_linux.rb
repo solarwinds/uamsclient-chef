@@ -12,7 +12,7 @@ execute 'Install UAMS Client with apt - in container' do
 end
 
 package 'Install UAMS Client with dnf/yum' do
-  package_name lazy { "#{node.run_state['installation_pkg']}" }
+  package_name lazy { node.run_state['installation_pkg'].to_s }
   action :install
   only_if { node.run_state['install_new_version'] && (%w(dnf yum).include? node.run_state['package_manager']) }
 end
