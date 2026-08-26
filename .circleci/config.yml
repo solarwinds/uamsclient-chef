@@ -77,6 +77,18 @@ commands:
             sudo yum -y install libxcrypt-compat || sudo yum -y install libxcrypt || true
           fi
 
+  install-chef-deps-deb-buster:
+    steps:
+      - run: |
+          sed -i -e 's/deb.debian.org/archive.debian.org/g' -e 's|security.debian.org|archive.debian.org/|g' -e '/buster-updates/d' /etc/apt/sources.list
+          export LANG=C.UTF-8
+          export LC_ALL=C.UTF-8
+          if [ "$UID" == 0 ]; then
+            apt update && apt -y install sudo curl
+          else
+            sudo apt update && sudo apt -y install sudo curl
+          fi
+
   install-chef-deps-centos-7:
     steps:
       - run: |
@@ -87,22 +99,21 @@ commands:
 
 
   install-chef:
+    parameters:
+      version:
+        type: string
+        default: ""
     steps:
       - run: |
-          if [ "$UID" == 0 ]; then
-            curl -L https://omnitruck.chef.io/install.sh | bash
-          else
-            curl -L https://omnitruck.chef.io/install.sh | sudo bash
+          VERSION_FLAG=""
+          if [ -n "<< parameters.version >>" ]; then
+            VERSION_FLAG="-v << parameters.version >>"
           fi
-
-  install-chef-fedora-32:
-    steps:
-      - run: |
           if [ "$UID" == 0 ]; then
-            curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v 17.10.3
+            curl -L https://omnitruck.chef.io/install.sh | bash -s -- $VERSION_FLAG
           else
-            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 17.10.3
-          fi 
+            curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- $VERSION_FLAG
+          fi
 
 jobs:
   chef-lint:
@@ -163,7 +174,8 @@ jobs:
       - image: debian:stretch
     steps:
       - install-chef-deps-deb-stretch
-      - install-chef
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
@@ -173,7 +185,7 @@ jobs:
     docker:
       - image: debian:buster
     steps:
-      - install-chef-deps-deb
+      - install-chef-deps-deb-buster
       - install-chef
       - install-client
       - verify-install-container
@@ -207,7 +219,8 @@ jobs:
       - image: fedora:32
     steps:
       - install-chef-deps-rpm
-      - install-chef-fedora-32
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
@@ -218,7 +231,8 @@ jobs:
       - image: fedora:36
     steps:
       - install-chef-deps-rpm
-      - install-chef
+      - install-chef:
+          version: "17.10.3"
       - install-client
       - verify-install-container
       - uninstall-client
