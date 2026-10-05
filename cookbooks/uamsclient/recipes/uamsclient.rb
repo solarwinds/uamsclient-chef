@@ -54,11 +54,11 @@ ruby_block 'Check OS support' do
         isVersionSupported = false
       end
     else
-      raise "Platform #{node['platform']} is not supported by UAMS Client."
+      raise node['uamsclient']['unsupported_os_msg']
     end
 
     unless isVersionSupported
-      raise "Platform (#{node['platform']}) version #{node['platform_version']} is not supported."
+      raise node['uamsclient']['unsupported_os_version_msg']
     end
     node.run_state['major_platform_version'] = majorPlatformVersion
   end

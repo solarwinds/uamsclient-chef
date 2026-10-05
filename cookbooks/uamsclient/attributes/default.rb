@@ -19,3 +19,15 @@ default['uamsclient']['local_config']['user'] = 'user_test'
 default['uamsclient']['local_config']['secret_name'] = 'secret_name_test'
 default['uamsclient']['credentials_config']['access_key_id'] = 'your_access_key_id'
 default['uamsclient']['credentials_config']['secret_access_key'] = 'your_access_key_id'
+
+# Supported OS messages
+docs_url = 'https://documentation.solarwinds.com/en/success_center/observability/content/system_requirements/agent_requirements.htm'
+
+default['uamsclient']['product_name'] = 'SolarWinds UAMS Client'
+default['uamsclient']['agent_requirements_docs_url'] = docs_url
+default['uamsclient']['unsupported_os_msg'] =
+  "The #{node['uamsclient']['product_name']} does not support your operating system. " \
+  "Supported operating systems are defined in the official documentation: #{docs_url}"
+default['uamsclient']['unsupported_os_version_msg'] =
+  'This operating system version is not supported. ' \
+  "Supported operating system versions are defined in the official documentation: #{docs_url}"
