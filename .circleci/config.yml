@@ -186,8 +186,7 @@ jobs:
       - image: debian:stretch
     steps:
       - install-chef-deps-deb-stretch
-      - install-chef:
-          version: "17.10.3"
+      - install-chef
       - install-client
       - verify-install-container
       - uninstall-client
