@@ -1,7 +1,7 @@
 module PluginChecker
   def self.wait_for_plugin_state(plugin_name, plugin_instance)
     api_url = 'http://127.0.0.1:2113/info/plugins?format=json'
-    target_state = 'STATUS_CODE_OK'
+    target_states = %w(STATUS_CODE_OK STATUS_CODE_INITIALIZING)
     max_retries = 12
     retry_interval = 5
     retries = 0
@@ -10,8 +10,8 @@ module PluginChecker
         response = Net::HTTP.get(URI(api_url))
         json_data = JSON.parse(response)
         state = json_data.dig(plugin_name, plugin_instance, 'status_code')
-        if state == target_state
-          Chef::Log.info("Plugin (#{plugin_name}) reached state: #{target_state}")
+        if target_states.include?(state)
+          Chef::Log.info("Plugin (#{plugin_name}) reached state: #{state}")
           break
         else
           Chef::Log.info("Plugin (#{plugin_name}) current state: #{state}")
